@@ -24,7 +24,7 @@ public class Board {
     }
     public void updateBoard(){
         Sidebar sidebar = new Sidebar(Component.text(title));
-        int i = lines.size()+1;
+        int i = lines.size();
         for(String line : lines){
             sidebar.createLine(new Sidebar.ScoreboardLine(i + "", Component.text(line), i));
             i--;

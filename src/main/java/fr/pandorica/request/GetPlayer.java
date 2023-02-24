@@ -69,7 +69,6 @@ public class GetPlayer {
     public int getRank() {
         try{
             JsonObject jsonObject = new Request("/player/rank", uuid).get();
-            System.out.println(jsonObject.get("rank"));
             return jsonObject.get("rank").getAsInt();
         } catch (IOException e){
             e.printStackTrace();
