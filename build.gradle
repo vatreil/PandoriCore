@@ -3,7 +3,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 
-group 'org.example'
+group 'fr.pandorica'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -26,3 +26,6 @@ jar {
                 "Multi-Release": true
     }
 }
+
+
+
