@@ -37,6 +37,8 @@ public class Main {
             player.setRespawnPoint(new Pos(0, 42, 0));
         });
 
+
+
         // Start the server on port 25565
         minecraftServer.start("0.0.0.0", 25565);
 
