@@ -59,8 +59,7 @@ public class GetPlayer {
     public String getPseudo() {
         try{
             JsonObject json = new Request("/player/pseudo", uuid).get();
-            String pseudo = String.valueOf(json.get("pseudo"));
-            return pseudo;
+            return String.valueOf(json.get("pseudo"));
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -70,8 +69,8 @@ public class GetPlayer {
     public int getRank() {
         try{
             JsonObject jsonObject = new Request("/player/rank", uuid).get();
-            Integer rank = Integer.parseInt(jsonObject.get("rank").toString());
-            return rank;
+            System.out.println(jsonObject.get("rank"));
+            return jsonObject.get("rank").getAsInt();
         } catch (IOException e){
             e.printStackTrace();
         }
