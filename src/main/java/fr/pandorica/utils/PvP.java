@@ -11,8 +11,7 @@ import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.minestom.server.scoreboard.Team;
 
 public class PvP {
-
-    public static void loadLegacy(Instance instance, Team team){
+    public static void loadLegacy(Instance instance){
         PvpExtension.init();
         FoodConfig foodConfig = FoodConfig.emptyBuilder(false).build();
         DamageConfig damageConfig = DamageConfig.legacyBuilder()
@@ -26,16 +25,14 @@ public class PvP {
                 .damage(damageConfig)
                 .build();
 
-        instance = MinecraftServer.getInstanceManager().getInstances().iterator().next();
         MinecraftServer.getGlobalEventHandler().addChild(pvPConfig.createNode());
         instance.setExplosionSupplier(PvpExplosionSupplier.INSTANCE);
     }
 
-    public static Team disableCollision(Team team){
-        team = MinecraftServer.getTeamManager().createBuilder("default")
+    public static Team disableCollision(){
+        return MinecraftServer.getTeamManager().createBuilder("default")
                 .collisionRule(TeamsPacket.CollisionRule.NEVER)
                 .build();
-        return team;
     }
 
 
