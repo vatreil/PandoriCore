@@ -1,7 +1,7 @@
 package fr.pandorica.request.admin;
 
-import fr.pandorica.manageris.utils.Request;
-import org.json.simple.JSONObject;
+import com.google.gson.JsonObject;
+import fr.pandorica.utils.Request;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -17,7 +17,7 @@ public class PostWarn {
         this.uuid = uuid;
     }
 
-    public void warnPlayer(JSONObject jsonObject){
+    public void warnPlayer(JsonObject jsonObject){
         try {
             Date date = new Date();
 
@@ -25,7 +25,7 @@ public class PostWarn {
                     DateFormat.SHORT,
                     DateFormat.SHORT);
 
-            jsonObject.put("date", shortDateFormat.format(date));
+            jsonObject.addProperty("date", shortDateFormat.format(date));
             new Request("/admin/warn", uuid).post(jsonObject);
             return;
         } catch (IOException e){
