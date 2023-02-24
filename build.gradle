@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    // WARNING: outdated version, replace it to the latest
+    // Reminder: can be found at https://jitpack.io/#Minestom/Minestom
+    implementation 'com.github.Minestom:Minestom:1.19.3-SNAPSHOT'
+    implementation 'com.github.TogAr2:MinestomPvP:master-SNAPSHOT'
+    implementation 'redis.clients:jedis:3.7.0'
+}
+
+jar {
+    manifest {
+        // WARNING: change the 'Main-Class' value
+        attributes 'Main-Class': 'org.example.Main',
+                "Multi-Release": true
+    }
+}
