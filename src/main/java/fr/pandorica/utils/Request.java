@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -18,11 +17,12 @@ public class Request {
     UUID uuid;
     HttpURLConnection con;
     String context;
+    public static String base_url;
 
     public Request(String context, UUID uuid) throws IOException {
         this.context = context;
         this.uuid= uuid;
-        URL url = new URL("http://api.dev.pandorica.games:8065" + context);
+        URL url = new URL(base_url + context);
         this.con = (HttpURLConnection) url.openConnection();
     }
 

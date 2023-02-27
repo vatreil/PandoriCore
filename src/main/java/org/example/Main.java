@@ -1,5 +1,6 @@
 package org.example;
 
+import fr.pandorica.redis.RedisManager;
 import io.github.bloepiloepi.pvp.PvpExtension;
 import io.github.bloepiloepi.pvp.config.DamageConfig;
 import io.github.bloepiloepi.pvp.config.FoodConfig;
@@ -8,6 +9,7 @@ import io.github.bloepiloepi.pvp.config.PvPConfig;
 import io.github.bloepiloepi.pvp.explosion.PvpExplosionSupplier;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.instance.*;
@@ -15,12 +17,25 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.network.packet.server.play.TeamsPacket;
 import net.minestom.server.scoreboard.Team;
+import redis.clients.jedis.Jedis;
 
 public class Main {
 
     public static Instance instance;
     public static Team team;
     public static void main(String[] args) {
+
+
+
+        PlayerSkin skinFromUsername = PlayerSkin.fromUsername("Notch");
+        new RedisManager("localhost", "PandiRis18").connexion();
+        Jedis jedis = RedisManager.getJedis();
+        jedis.del("test");
+        jedis.hset("test", "textures",skinFromUsername.textures());
+        jedis.hset("test", "signature",skinFromUsername.signature());
+
+        new PlayerSkin(skinFromUsername.textures(), skinFromUsername.signature());
+        System.out.println(jedis.hgetAll("test").get("textures"));
 //        // Initialization
 //        MinecraftServer minecraftServer = MinecraftServer.init();
 //        InstanceManager instanceManager = MinecraftServer.getInstanceManager();

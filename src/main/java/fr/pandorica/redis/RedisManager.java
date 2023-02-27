@@ -22,7 +22,7 @@ public class RedisManager {
     public void connexion() {
         if(!IsOnline()) {
             jedis = new Jedis(url, 6379);
-            jedis.auth(pwd);
+            jedis.connect();
             System.out.println("[Redis] Succefully connected !");
         }
     }
