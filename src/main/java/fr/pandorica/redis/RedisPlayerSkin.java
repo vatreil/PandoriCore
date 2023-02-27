@@ -12,7 +12,7 @@ public class RedisPlayerSkin {
     public static PlayerSkin getSkin(UUID uuid){
         try {
             Map skin = RedisManager.getJedis().hgetAll("skin-" + uuid);
-            if (!skin.isEmpty()) {
+            if (skin != null) {
                 return new PlayerSkin((String) skin.get("textures"), (String) skin.get("signature"));
             } else {
                 return putSkin(uuid);
