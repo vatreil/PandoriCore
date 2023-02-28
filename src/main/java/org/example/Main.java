@@ -1,13 +1,21 @@
 package org.example;
 
+import fr.pandorica.redis.RedisManager;
+import fr.pandorica.redis.RedisPlayerSkin;
 import net.minestom.server.instance.*;
 import net.minestom.server.scoreboard.Team;
+
+import java.util.UUID;
 
 public class Main {
 
     public static Instance instance;
     public static Team team;
     public static void main(String[] args) {
+
+        new RedisManager("localhost", "").connexion();
+
+        RedisPlayerSkin.getSkin(UUID.fromString("d49d750d-ec66-4677-9841-687d5ec03145"));
 
 //        // Initialization
 //        MinecraftServer minecraftServer = MinecraftServer.init();
