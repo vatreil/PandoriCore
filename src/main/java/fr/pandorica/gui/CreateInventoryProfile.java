@@ -20,11 +20,11 @@ import java.util.UUID;
 public class CreateInventoryProfile {
 
 
-    public void openGameMenu(Player playerOpen, Player playerProfil){
+    public void openGameMenu(Player playerOpen, UUID uuidProfil){
 
         GetPlayer getPlayer = new GetPlayer(playerOpen.getUuid());
         Boolean modo = RankManager.isAdmin(getPlayer.getRank());
-        Inventory inv = new Inventory((modo)? InventoryType.CHEST_3_ROW : InventoryType.CHEST_1_ROW, playerProfil.getDisplayName());
+        Inventory inv = new Inventory((modo)? InventoryType.CHEST_3_ROW : InventoryType.CHEST_1_ROW, new GetPlayer(uuidProfil).getPseudo());
 
         inv.addInventoryCondition((playerClick, slot, click, result) -> {
             if (slot == 2){
@@ -32,8 +32,6 @@ public class CreateInventoryProfile {
             }
         });
         //inv.setItem(1, main.getItem(Material.DIAMOND_BLOCK, ChatColor.YELLOW + "PARTY!"));
-
-        UUID uuidProfil = playerProfil.getUuid();
 
         if(new GetFriend(playerOpen.getUuid()).isFriendWith(uuidProfil)){
             inv.setItemStack(2,
