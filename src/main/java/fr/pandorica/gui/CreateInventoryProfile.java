@@ -1,6 +1,7 @@
 package fr.pandorica.gui;
 
 
+import fr.pandorica.rank.RankManager;
 import fr.pandorica.redis.RedisPlayerParty;
 import fr.pandorica.redis.RedisPlayerSkin;
 import fr.pandorica.request.GetFriend;
@@ -16,18 +17,25 @@ import net.minestom.server.item.metadata.PlayerHeadMeta;
 
 import java.util.UUID;
 
-public class CreateItemFriendParty {
+public class CreateInventoryProfile {
 
 
-    public void openGameMenu(Player player, String playerProfil, Boolean modo){
+    public void openGameMenu(Player playerOpen, Player playerProfil){
 
-        Inventory inv = new Inventory((modo == true)? InventoryType.CHEST_3_ROW : InventoryType.CHEST_1_ROW, playerProfil);
+        GetPlayer getPlayer = new GetPlayer(playerOpen.getUuid());
+        Boolean modo = RankManager.isAdmin(getPlayer.getRank());
+        Inventory inv = new Inventory((modo)? InventoryType.CHEST_3_ROW : InventoryType.CHEST_1_ROW, playerProfil.getDisplayName());
+
+        inv.addInventoryCondition((playerClick, slot, click, result) -> {
+            if (slot == 2){
+                System.out.println("test slot 2 ");
+            }
+        });
         //inv.setItem(1, main.getItem(Material.DIAMOND_BLOCK, ChatColor.YELLOW + "PARTY!"));
 
-        GetPlayer getPlayer = new GetPlayer(player.getUuid());
-        UUID uuidProfil = getPlayer.getPlayerUUID(playerProfil);
+        UUID uuidProfil = playerProfil.getUuid();
 
-        if(new GetFriend(player.getUuid()).isFriendWith(uuidProfil)){
+        if(new GetFriend(playerOpen.getUuid()).isFriendWith(uuidProfil)){
             inv.setItemStack(2,
                     ItemStack.builder(Material.REDSTONE_BLOCK)
                             .displayName(Component.text("Remove friend!", NamedTextColor.RED)).build());
@@ -38,7 +46,7 @@ public class CreateItemFriendParty {
         }
 
         if(new RedisPlayerParty(uuidProfil).hasProfilParty()){
-            if(new RedisPlayerParty(uuidProfil).getLeader() == player.getUuid().toString()){
+            if(new RedisPlayerParty(uuidProfil).getLeader() == playerOpen.getUuid().toString()){
                 inv.setItemStack(6,
                         ItemStack.builder(Material.REDSTONE_BLOCK)
                                 .displayName(Component.text("Kick Party", NamedTextColor.RED)).build());
@@ -56,7 +64,7 @@ public class CreateItemFriendParty {
         inv.setItemStack(4,
                 ItemStack.builder(Material.PLAYER_HEAD)
                         .displayName(Component.text("Invite Party", NamedTextColor.GREEN))
-                        .meta(PlayerHeadMeta.class, meta -> meta.skullOwner(player.getUuid()).playerSkin(RedisPlayerSkin.getSkin(player.getUuid())))
+                        .meta(PlayerHeadMeta.class, meta -> meta.skullOwner(playerOpen.getUuid()).playerSkin(RedisPlayerSkin.getSkin(playerOpen.getUuid())))
                         .build());
 
 
@@ -74,7 +82,7 @@ public class CreateItemFriendParty {
                             .displayName(Component.text("WARN", NamedTextColor.YELLOW)).build());
         }
 
-        player.openInventory(inv);
+        playerOpen.openInventory(inv);
 
     }
 }

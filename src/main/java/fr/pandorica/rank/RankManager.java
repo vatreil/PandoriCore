@@ -45,4 +45,8 @@ public enum RankManager {
     public String getDisplayName() {
         return displayName;
     }
+
+    public static Boolean isAdmin(Integer rank){
+        return powerToRank(rank) == RankManager.ADMIN;
+    }
 }
