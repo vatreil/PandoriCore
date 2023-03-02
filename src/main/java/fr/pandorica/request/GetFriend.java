@@ -19,6 +19,7 @@ public class GetFriend {
         List<String> list = new ArrayList<>();
         try{
             JsonObject json = new Request("/player/friends", uuid).get();
+            System.out.println(json.get("friends"));
             List<String> friends = (List<String>) json.get("friends");
             return friends;
         } catch (IOException e){
