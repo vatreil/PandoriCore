@@ -24,7 +24,6 @@ public class GetFriend {
             JsonArray friends = (JsonArray) json.get("friends");
             for (JsonElement uuid_str : friends)
                 list.add(uuid_str.getAsString());
-            System.out.println(list);
             return list;
         } catch (IOException e){
             e.printStackTrace();
