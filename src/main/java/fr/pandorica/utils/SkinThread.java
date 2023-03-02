@@ -7,20 +7,18 @@ import net.minestom.server.item.metadata.PlayerHeadMeta;
 
 import java.util.UUID;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class SkinThread {
 
-    public void getSkin(Inventory inv, Integer slot, ItemStack itemStack, UUID uuid){
-        final ScheduledExecutorService exec = Executors.newScheduledThreadPool(1);
-        exec.schedule(new Runnable() {
-            @Override
-            public void run() {
-                ItemStack it = itemStack.withMeta(PlayerHeadMeta.class, meta -> meta.skullOwner(uuid).playerSkin(RedisPlayerSkin.getSkin(uuid)));
-                inv.setItemStack(slot, it);
-            }
-        }, 0, TimeUnit.MICROSECONDS);
+    private static final ForkJoinPool FORK_JOIN_POOL = new ForkJoinPool();
 
+    public void getSkin(Inventory inv, Integer slot, ItemStack itemStack, UUID uuid){
+        FORK_JOIN_POOL.execute(() -> {
+            ItemStack it = itemStack.withMeta(PlayerHeadMeta.class, meta -> meta.skullOwner(uuid).playerSkin(RedisPlayerSkin.getSkin(uuid)));
+            inv.setItemStack(slot, it);
+        });
     }
 }

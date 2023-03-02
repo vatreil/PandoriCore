@@ -27,7 +27,6 @@ public class GetPlayer {
     public UUID getPlayerUUID(String pseudo) {
         try{
             JsonObject json =  new Request("/player/uuid", uuid).getWithHeader("Pseudo", pseudo);
-
             return UUID.fromString(String.valueOf(json.get("_id")));
         } catch (IOException e){
             e.printStackTrace();
