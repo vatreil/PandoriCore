@@ -1,6 +1,8 @@
 package fr.pandorica.request;
 
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import fr.pandorica.utils.Request;
 
@@ -19,9 +21,11 @@ public class GetFriend {
         List<String> list = new ArrayList<>();
         try{
             JsonObject json = new Request("/player/friends", uuid).get();
-            System.out.println(json.get("friends"));
-            List<String> friends = (List<String>) json.get("friends");
-            return friends;
+            JsonArray friends = (JsonArray) json.get("friends");
+            for (JsonElement uuid_str : friends)
+                list.add(uuid_str.getAsString());
+            System.out.println(list);
+            return list;
         } catch (IOException e){
             e.printStackTrace();
         }
