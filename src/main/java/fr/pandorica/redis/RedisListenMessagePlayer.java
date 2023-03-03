@@ -68,11 +68,11 @@ public class RedisListenMessagePlayer implements Runnable {
 
                             if(body.get("cmd") != null){
 
-                                Component accept = Component.text("Accepter")
+                                Component accept = Component.text("  Accepter", NamedTextColor.GREEN)
                                         .hoverEvent(HoverEvent.showText(Component.text("Accepter", NamedTextColor.GREEN)))
                                         .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, body.get("cmd"))).build().clickEvent());
 
-                                Component refuse = Component.text("Refuser")
+                                Component refuse = Component.text("  Refuser", NamedTextColor.RED)
                                         .hoverEvent(HoverEvent.showText(Component.text("Refuser", NamedTextColor.RED)))
                                         .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/f refuse")).build().clickEvent());
 
