@@ -20,7 +20,7 @@ public class RedisListenMessagePlayer implements Runnable {
     public RedisListenMessagePlayer(String url, String pwd, String srvname) {
         this.srvname = srvname;
         jedis = new Jedis(url, 6379);
-        jedis.auth(pwd);
+        jedis.connect();
 
         Map<String, String> messageBody = new HashMap<>();
         messageBody.put("up", "up");
