@@ -67,12 +67,18 @@ public class RedisListenMessagePlayer implements Runnable {
                             player = (Player) Player.getEntity(uuidPlayer);
 
                             if(body.get("cmd") != null){
-                                System.out.println("with command");
-                                Component profile = Component.text(body.get("msg"))
-                                        .hoverEvent(HoverEvent.showText(Component.text(body.get("cmd"), NamedTextColor.GREEN)))
+
+                                Component accept = Component.text("Accepter")
+                                        .hoverEvent(HoverEvent.showText(Component.text("Accepter", NamedTextColor.GREEN)))
                                         .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, body.get("cmd"))).build().clickEvent());
 
-                                player.sendMessage(profile);
+                                Component refuse = Component.text("Refuser")
+                                        .hoverEvent(HoverEvent.showText(Component.text("Refuser", NamedTextColor.RED)))
+                                        .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/f refuse")).build().clickEvent());
+
+                                Component msg = Component.text(body.get("msg")).append(accept).append(refuse);
+
+                                player.sendMessage(msg);
                             } else {
                                 player.sendMessage(body.get("msg"));
                             }
@@ -81,7 +87,6 @@ public class RedisListenMessagePlayer implements Runnable {
                                     ItemStack.builder(Material.PLAYER_HEAD)
                                             .meta(PlayerHeadMeta.class, meta -> meta.skullOwner(UUID.fromString(body.get("sender_uuid"))).playerSkin(RedisPlayerSkin.getSkin(UUID.fromString(body.get("sender_uuid")))))
                                             .build(),
-                                    //Component.text("§e"+ body.get("msg") + "§6 Vous a demandé en amis.", NamedTextColor.YELLOW)
                                     Component.text(body.get("msg"), NamedTextColor.YELLOW)
                             );
 
