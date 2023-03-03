@@ -21,15 +21,28 @@ public class RedisPlayerServer {
         map.put("server", serverName);
         try{
             jedis.hset("player:" + uuid.toString(), map);
+            jedis.persist("player:" + uuid.toString());
             jedis.close();
         }catch (JedisConnectionException e){
             e.printStackTrace();
         }
     }
 
+    public String getServerInKeyPlayer(){
+        try{
+            String server = jedis.hget("player:" + uuid.toString(), "server");
+            jedis.close();
+            return server;
+        }catch (JedisConnectionException e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public void delServerInKeyPlayer(){
         try{
             jedis.hdel("player:" + uuid.toString(), "server");
+            jedis.expire("player:" + uuid.toString(), 3600);
             jedis.close();
         } catch (JedisConnectionException e){
             e.printStackTrace();
