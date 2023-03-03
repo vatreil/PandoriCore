@@ -69,7 +69,7 @@ public class RedisListenMessagePlayer implements Runnable {
                             if(body.get("cmd") != null){
                                 System.out.println("with command");
                                 Component profile = Component.text(body.get("msg"))
-                                        .hoverEvent(HoverEvent.showText(Component.text("dsqsqdsq")))
+                                        .hoverEvent(HoverEvent.showText(Component.text(body.get("cmd"), NamedTextColor.GREEN)))
                                         .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, body.get("cmd"))).build().clickEvent());
 
                                 player.sendMessage(profile);
@@ -81,7 +81,8 @@ public class RedisListenMessagePlayer implements Runnable {
                                     ItemStack.builder(Material.PLAYER_HEAD)
                                             .meta(PlayerHeadMeta.class, meta -> meta.skullOwner(UUID.fromString(body.get("sender_uuid"))).playerSkin(RedisPlayerSkin.getSkin(UUID.fromString(body.get("sender_uuid")))))
                                             .build(),
-                                    Component.text("§e"+ Component.text(body.get("msg")) + "§6 Vous a demandé en amis.", NamedTextColor.YELLOW)
+                                    //Component.text("§e"+ body.get("msg") + "§6 Vous a demandé en amis.", NamedTextColor.YELLOW)
+                                    Component.text(body.get("msg"), NamedTextColor.YELLOW)
                             );
 
 
