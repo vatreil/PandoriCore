@@ -1,6 +1,7 @@
 package fr.pandorica.redis;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.StreamEntryID;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
 import java.util.Map;
@@ -19,7 +20,7 @@ public class RedisSendStream {
 
     public void sendMessage() {
         try {
-            jedis.xadd(nameQueue, null, this.messageBody);
+            jedis.xadd(nameQueue, new StreamEntryID("*"), this.messageBody);
             jedis.close();
         } catch (JedisConnectionException e){
             e.printStackTrace();
