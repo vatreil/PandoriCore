@@ -4,6 +4,7 @@ import fr.pandorica.utils.ParseComponent;
 import fr.pandorica.utils.SendNotification;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
@@ -67,7 +68,10 @@ public class RedisListenMessagePlayer implements Runnable {
 
                             if(body.get("cmd") != null){
                                 System.out.println("with command");
-                                Component profile = Component.text(body.get("msg")).clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, body.get("cmd"))).build().clickEvent());
+                                Component profile = Component.text(body.get("msg"))
+                                        .hoverEvent(HoverEvent.showText(Component.text("dsqsqdsq")))
+                                        .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, body.get("cmd"))).build().clickEvent());
+
                                 player.sendMessage(profile);
                             } else {
                                 player.sendMessage(body.get("msg"));
@@ -77,7 +81,7 @@ public class RedisListenMessagePlayer implements Runnable {
                                     ItemStack.builder(Material.PLAYER_HEAD)
                                             .meta(PlayerHeadMeta.class, meta -> meta.skullOwner(UUID.fromString(body.get("sender_uuid"))).playerSkin(RedisPlayerSkin.getSkin(UUID.fromString(body.get("sender_uuid")))))
                                             .build(),
-                                    Component.text("§e"+ ParseComponent.getString(player.getDisplayName()) + "§6 Vous a demandé en amis.", NamedTextColor.YELLOW)
+                                    Component.text("§e"+ Component.text(body.get("msg")) + "§6 Vous a demandé en amis.", NamedTextColor.YELLOW)
                             );
 
 
