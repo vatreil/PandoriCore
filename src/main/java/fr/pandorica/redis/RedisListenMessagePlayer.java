@@ -54,24 +54,29 @@ public class RedisListenMessagePlayer implements Runnable {
 
                     StreamEntry streamEntry = message.getValue().get(0);
                     Map<String, String> body = new HashMap(message.getValue().get(0).getFields());
-                    if(body.get("uuid") != null & body.get("msg") != null) {
-                        UUID uuidPlayer = UUID.fromString(body.get("uuid"));
-                        player = (Player) Player.getEntity(uuidPlayer);
+                    try {
+                        if(body.get("uuid") != null & body.get("msg") != null) {
+                            UUID uuidPlayer = UUID.fromString(body.get("uuid"));
+                            player = (Player) Player.getEntity(uuidPlayer);
 
-                        if(body.get("cmd") != null){
-                            System.out.println("with command");
-                            Component profile = Component.text(body.get("msg")).clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, body.get("cmd"))).build().clickEvent());
-                            player.sendMessage(profile);
+                            if(body.get("cmd") != null){
+                                System.out.println("with command");
+                                Component profile = Component.text(body.get("msg")).clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, body.get("cmd"))).build().clickEvent());
+                                player.sendMessage(profile);
+                            } else {
+                                player.sendMessage(body.get("msg"));
+                            }
+
+
+                        } else if (body.get("up") != null){
+                            System.out.println("ListenStatus: up");
                         } else {
-                            player.sendMessage(body.get("msg"));
+                            return;
                         }
-
-
-                    } else if (body.get("up") != null){
-                        System.out.println("ListenStatus: up");
-                    } else {
-                        return;
+                    } catch (Exception e){
+                        e.printStackTrace();
                     }
+
 
 
                     //TextComponent msg = (TextComponent)body.get("msg");
