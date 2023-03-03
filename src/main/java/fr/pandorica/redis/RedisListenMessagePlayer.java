@@ -1,8 +1,14 @@
 package fr.pandorica.redis;
 
+import fr.pandorica.utils.ParseComponent;
+import fr.pandorica.utils.SendNotification;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minestom.server.entity.Player;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
+import net.minestom.server.item.metadata.PlayerHeadMeta;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.StreamEntry;
 import redis.clients.jedis.StreamEntryID;
@@ -66,6 +72,14 @@ public class RedisListenMessagePlayer implements Runnable {
                             } else {
                                 player.sendMessage(body.get("msg"));
                             }
+
+                            SendNotification.sendGoal(player,
+                                    ItemStack.builder(Material.PLAYER_HEAD)
+                                            .meta(PlayerHeadMeta.class, meta -> meta.skullOwner(UUID.fromString(body.get("sender_uuid"))).playerSkin(RedisPlayerSkin.getSkin(UUID.fromString(body.get("sender_uuid")))))
+                                            .build(),
+                                    Component.text("§e"+ ParseComponent.getString(player.getDisplayName()) + "§6 Vous a demandé en amis.", NamedTextColor.YELLOW)
+                            );
+
 
 
                         } else if (body.get("up") != null){
