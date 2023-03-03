@@ -2,13 +2,7 @@ package fr.pandorica.redis;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
-import net.minestom.server.entity.PlayerSkin;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.StreamEntry;
 import redis.clients.jedis.StreamEntryID;
