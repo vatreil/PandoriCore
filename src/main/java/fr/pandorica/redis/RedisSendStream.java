@@ -20,7 +20,7 @@ public class RedisSendStream {
 
     public void sendMessage() {
         try {
-            jedis.xadd(nameQueue, new StreamEntryID("*"), this.messageBody);
+            jedis.xadd(nameQueue, new StreamEntryID(), this.messageBody);
             jedis.close();
         } catch (JedisConnectionException e){
             e.printStackTrace();
