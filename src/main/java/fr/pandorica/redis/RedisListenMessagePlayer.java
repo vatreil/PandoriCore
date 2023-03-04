@@ -52,7 +52,9 @@ public class RedisListenMessagePlayer implements Runnable {
 
                     StreamEntry streamEntry = message.getValue().get(0);
                     Map<String, String> body = new HashMap(message.getValue().get(0).getFields());
+                    System.out.println(body.get("type"));
                     if (body.get("type") != null){
+                        System.out.println(Integer.getInteger(body.get("type")));
                         switch (MessageType.ids.get(Integer.getInteger(body.get("type")))){
                             case SEND_FRIEND:
                                 new FriendMessage().send(body);
