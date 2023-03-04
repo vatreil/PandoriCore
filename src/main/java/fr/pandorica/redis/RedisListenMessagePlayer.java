@@ -1,15 +1,7 @@
 package fr.pandorica.redis;
 
-import fr.pandorica.utils.ParseComponent;
-import fr.pandorica.utils.SendNotification;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.minestom.server.entity.Player;
-import net.minestom.server.item.ItemStack;
-import net.minestom.server.item.Material;
-import net.minestom.server.item.metadata.PlayerHeadMeta;
+import fr.pandorica.friend.FriendMessage;
+import fr.pandorica.redis.MessagePlayer.MessageType;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.StreamEntry;
 import redis.clients.jedis.StreamEntryID;
@@ -53,7 +45,6 @@ public class RedisListenMessagePlayer implements Runnable {
                 break;
             }
             if(messages != null) {
-                Player player;
 
                 for (Map.Entry<String, List<StreamEntry>> message : messages) {
 
@@ -61,49 +52,12 @@ public class RedisListenMessagePlayer implements Runnable {
 
                     StreamEntry streamEntry = message.getValue().get(0);
                     Map<String, String> body = new HashMap(message.getValue().get(0).getFields());
-                    try {
-                        if(body.get("uuid") != null & body.get("msg") != null) {
-                            UUID uuidPlayer = UUID.fromString(body.get("uuid"));
-                            player = (Player) Player.getEntity(uuidPlayer);
-
-                            if(body.get("cmd") != null){
-
-                                Component accept = Component.text("  Accepter", NamedTextColor.GREEN)
-                                        .hoverEvent(HoverEvent.showText(Component.text("Accepter", NamedTextColor.GREEN)))
-                                        .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, body.get("cmd"))).build().clickEvent());
-
-                                Component refuse = Component.text("  Refuser", NamedTextColor.RED)
-                                        .hoverEvent(HoverEvent.showText(Component.text("Refuser", NamedTextColor.RED)))
-                                        .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/f refuse")).build().clickEvent());
-
-                                Component msg = Component.text(body.get("msg")).append(accept).append(refuse);
-
-                                player.sendMessage(msg);
-                            } else {
-                                player.sendMessage(body.get("msg"));
-                            }
-
-                            SendNotification.sendGoal(player,
-                                    ItemStack.builder(Material.PLAYER_HEAD)
-                                            .meta(PlayerHeadMeta.class, meta -> meta.skullOwner(UUID.fromString(body.get("sender_uuid"))).playerSkin(RedisPlayerSkin.getSkin(UUID.fromString(body.get("sender_uuid")))))
-                                            .build(),
-                                    Component.text(body.get("msg"), NamedTextColor.YELLOW)
-                            );
-
-
-
-                        } else if (body.get("up") != null){
-                            System.out.println("ListenStatus: up");
-                        } else {
-                            return;
+                    if (body.get("type") != null){
+                        switch (MessageType.ids.get(Integer.getInteger(body.get("type")))){
+                            case SEND_FRIEND:
+                                new FriendMessage().send(body);
                         }
-                    } catch (Exception e){
-                        e.printStackTrace();
                     }
-
-
-
-                    //TextComponent msg = (TextComponent)body.get("msg");
 
                     jedis.xack(srvname, srvname, streamEntry.getID());
                 }
