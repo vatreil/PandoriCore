@@ -15,7 +15,7 @@ public class MessageBody {
                 messageBody.put("type", MessageType.SEND_PARTY.getId()+"");
                 messageBody.put("uuid", uuid_receiver.toString());
                 messageBody.put("sender_uuid", uuid_sender.toString());
-                messageBody.put("cmd", uuid_sender.toString());
+                messageBody.put("cmd", cmd);
                 messageBody.put("msg", msg);
         }
         return messageBody;
