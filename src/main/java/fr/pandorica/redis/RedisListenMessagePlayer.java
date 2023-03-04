@@ -59,6 +59,10 @@ public class RedisListenMessagePlayer implements Runnable {
                             case SEND_FRIEND:
                                 new FriendMessage().send(body);
                         }
+                    } else if (body.get("up") != null){
+                        System.out.println("ListenStatus: up");
+                    } else {
+                        return;
                     }
 
                     jedis.xack(srvname, srvname, streamEntry.getID());

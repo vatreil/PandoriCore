@@ -1,5 +1,6 @@
 package fr.pandorica.redis.MessagePlayer;
 
+import fr.pandorica.friend.FriendMessage;
 import fr.pandorica.rank.RankManager;
 import fr.pandorica.redis.RedisInfoPlayer;
 
@@ -8,8 +9,9 @@ import java.util.Map;
 
 public enum MessageType {
 
-    SEND_FRIEND(0, new RedisInfoPlayer()),
-    SEND_PARTY(1, new RedisInfoPlayer());
+    SEND_FRIEND(0, new FriendMessage()),
+    SEND_PARTY(1, new RedisInfoPlayer()),
+    SEND_INFO(2, new RedisInfoPlayer());
 
     private int id;
     private Object object;

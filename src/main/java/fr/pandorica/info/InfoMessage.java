@@ -1,4 +1,4 @@
-package fr.pandorica.friend;
+package fr.pandorica.info;
 
 import fr.pandorica.redis.RedisPlayerSkin;
 import fr.pandorica.utils.SendNotification;
@@ -14,7 +14,7 @@ import net.minestom.server.item.metadata.PlayerHeadMeta;
 import java.util.Map;
 import java.util.UUID;
 
-public class FriendMessage {
+public class InfoMessage {
 
     public void send(Map<String, String> body){
         try {
@@ -22,22 +22,7 @@ public class FriendMessage {
                 UUID uuidPlayer = UUID.fromString(body.get("uuid"));
                 Player player = (Player) Player.getEntity(uuidPlayer);
 
-                if(body.get("cmd") != null){
-
-                    Component accept = Component.text("  Accepter", NamedTextColor.GREEN)
-                            .hoverEvent(HoverEvent.showText(Component.text("Accepter", NamedTextColor.GREEN)))
-                            .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, body.get("cmd"))).build().clickEvent());
-
-                    Component refuse = Component.text("  Refuser", NamedTextColor.RED)
-                            .hoverEvent(HoverEvent.showText(Component.text("Refuser", NamedTextColor.RED)))
-                            .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/f refuse")).build().clickEvent());
-
-                    Component msg = Component.text(body.get("msg")).append(accept).append(refuse);
-
-                    player.sendMessage(msg);
-                } else {
-                    player.sendMessage(body.get("msg"));
-                }
+                player.sendMessage(body.get("msg"));
 
                 SendNotification.sendGoal(player,
                         ItemStack.builder(Material.PLAYER_HEAD)
