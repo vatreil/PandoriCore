@@ -26,6 +26,17 @@ public class PostFriend {
         }
         return;
     }
+    public void addFriend(UUID uuidReceiver){
+        try {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("friends", uuidReceiver.toString());
+            new Request("/player/friends/add", uuid).post(jsonObject);
+            return;
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return;
+    }
 
     public void setAllow(Boolean bool){
         try {

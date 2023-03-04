@@ -1,5 +1,6 @@
 package fr.pandorica.player.listeners;
 
+import fr.pandorica.player.PlayerManager;
 import fr.pandorica.rank.RankManager;
 import fr.pandorica.request.GetPlayer;
 import fr.pandorica.utils.ParseComponent;
@@ -14,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class PlayerChat implements EventListener<PlayerChatEvent> {
 
-    private Instance instance;
+    private static Instance instance;
 
     public PlayerChat(Instance instance){
         this.instance = instance;
@@ -27,12 +28,11 @@ public class PlayerChat implements EventListener<PlayerChatEvent> {
     @Override
     public @NotNull Result run(@NotNull PlayerChatEvent event) {
         Player player = event.getPlayer();
-        GetPlayer getPlayer = new GetPlayer(player.getUuid());
 
-        Component msg = Component.text(RankManager.powerToRank(getPlayer.getRank()).getDisplayName() + ParseComponent.getString(player.getDisplayName()) + " §7>> §f" + event.getMessage())
+        Component msg = Component.text(RankManager.powerToRank(PlayerManager.getPlayer(player.getUuid()).getRank()).getDisplayName() + ParseComponent.getString(player.getDisplayName()) + " §7>> §f" + event.getMessage())
                 .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/profil " + ParseComponent.getString(player.getDisplayName()))).build().clickEvent());
 
-        for (Player ply : instance.getPlayers()){
+        for (Player ply : instance.getPlayers()) {
             ply.sendMessage(msg);
         }
 
