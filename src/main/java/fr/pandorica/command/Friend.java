@@ -2,6 +2,7 @@ package fr.pandorica.command;
 
 import fr.pandorica.friend.RequestFriend;
 import fr.pandorica.gui.friend.AddFriend;
+import fr.pandorica.gui.friend.PlayerFriend;
 import fr.pandorica.redis.MessagePlayer.MessageBody;
 import fr.pandorica.redis.MessagePlayer.MessageType;
 import fr.pandorica.redis.RedisPlayerFriend;
@@ -11,6 +12,9 @@ import fr.pandorica.request.GetFriend;
 import fr.pandorica.request.GetPlayer;
 import fr.pandorica.request.PostFriend;
 import fr.pandorica.utils.ParseComponent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import net.minestom.server.entity.Player;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.listener.manager.PacketListenerConsumer;
@@ -26,7 +30,7 @@ public class Friend implements PacketListenerConsumer<ClientCommandChatPacket> {
         if (cmd[0].equalsIgnoreCase("f")) {
 
             if (cmd.length <= 1) {
-                //displayHelp(proxiedPlayer);
+                displayHelp(player);
                 return;
             }
 
@@ -108,13 +112,25 @@ public class Friend implements PacketListenerConsumer<ClientCommandChatPacket> {
                 }
             } else if (cmd.length == 3){
                 if (cmd[1].equalsIgnoreCase("add")) {
-                    System.out.println(cmd.toString());
                     ItemStack it = new RequestFriend().check(player, cmd[2]);
                     if (it != null){
                         AddFriend.openInventory(player, cmd[2], it);
                     }
                 }
+            } else {
+                displayHelp(player);
             }
         }
+    }
+
+    private void displayHelp(Player player) {
+        player.sendMessage("");
+        player.sendMessage(Component.text("Commands friends :", NamedTextColor.GOLD));
+        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f add Username", "Ajouter un amis", "/f add"));
+        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f accept", "Accepter la demandes d'ami", "/f accept"));
+        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f accept", "Refuser la demandes d'ami", "/f refuse"));
+        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f enable", "Activer les demandes d'amis", "/f enable"));
+        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f disable", "Désactiver les demandes d'amis", "/f disable"));
+        player.sendMessage("");
     }
 }
