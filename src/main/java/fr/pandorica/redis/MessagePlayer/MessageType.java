@@ -9,7 +9,7 @@ import java.util.Map;
 public enum MessageType {
 
     SEND_FRIEND(0, new RedisInfoPlayer()),
-    SEND_PARTY(2, new RedisInfoPlayer());
+    SEND_PARTY(1, new RedisInfoPlayer());
 
     private int id;
     private Object object;

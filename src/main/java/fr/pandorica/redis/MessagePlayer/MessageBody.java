@@ -12,7 +12,7 @@ public class MessageBody {
         Map<String, String> messageBody = new HashMap<>();
         switch (messageType){
             case SEND_FRIEND:
-                messageBody.put("type", MessageType.SEND_PARTY.getId()+"");
+                messageBody.put("type", String.valueOf(messageType.getId()));
                 messageBody.put("uuid", uuid_receiver.toString());
                 messageBody.put("sender_uuid", uuid_sender.toString());
                 messageBody.put("cmd", cmd);
