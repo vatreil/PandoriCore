@@ -58,10 +58,6 @@ public class Friend implements PacketListenerConsumer<ClientCommandChatPacket> {
                     player.sendMessage("§6Vous étes désormais amis avec §a" + new GetPlayer(UUID.fromString(redisPlayerFriend.getKeyRequestFriend())).getPseudo() + " §6.");
 
                     //RETURN MESSAGE SENDER
-//                    Map<String, String> messageBody = new HashMap<>();
-//                    messageBody.put("uuid", String.valueOf(redisPlayerFriend.getKeyRequestFriend()));
-//                    messageBody.put("sender_uuid", player.getUuid().toString());
-//                    messageBody.put("msg", "§6Vous étes désormais amis avec §a" + ParseComponent.getString(player.getDisplayName()));
                     Map<String, String> messageBody = MessageBody.getBody(
                             MessageType.SEND_INFO,
                             UUID.fromString(redisPlayerFriend.getKeyRequestFriend()),
