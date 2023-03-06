@@ -17,17 +17,20 @@ public class MessageBody {
                 messageBody.put("sender_uuid", uuid_sender.toString());
                 messageBody.put("cmd", cmd);
                 messageBody.put("msg", msg);
+                break;
             case SEND_PARTY:
                 messageBody.put("type", String.valueOf(messageType.getId()));
                 messageBody.put("uuid", uuid_receiver.toString());
                 messageBody.put("sender_uuid", uuid_sender.toString());
                 messageBody.put("cmd", cmd);
                 messageBody.put("msg", msg);
+                break;
             case SEND_INFO:
                 messageBody.put("type", String.valueOf(messageType.getId()));
                 messageBody.put("uuid", uuid_receiver.toString());
                 messageBody.put("sender_uuid", uuid_sender.toString());
                 messageBody.put("msg", msg);
+                break;
         }
         return messageBody;
     }

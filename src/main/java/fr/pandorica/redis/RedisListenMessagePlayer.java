@@ -2,6 +2,7 @@ package fr.pandorica.redis;
 
 import fr.pandorica.friend.FriendMessage;
 import fr.pandorica.info.InfoMessage;
+import fr.pandorica.party.PartyMessage;
 import fr.pandorica.redis.MessagePlayer.MessageType;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.StreamEntry;
@@ -58,8 +59,12 @@ public class RedisListenMessagePlayer implements Runnable {
                             case SEND_FRIEND:
                                 new FriendMessage().send(body);
                                 break;
+                            case SEND_PARTY:
+                                new PartyMessage().send(body);
+                                break;
                             case SEND_INFO:
                                 new InfoMessage().send(body);
+                                break;
                         }
                     } else if (body.get("up") != null){
                         System.out.println("ListenStatus: up");

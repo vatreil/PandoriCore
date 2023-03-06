@@ -61,6 +61,7 @@ public class CreateInventoryProfile {
                                 "§e"+ ParseComponent.getString(playerClick.getDisplayName())  + "§6 Vous invite à sa party.",
                                 "/p accept"
                         );
+                        playerClick.sendMessage("§6Demande envoyé à §e" + new GetPlayer(uuidProfil).getPseudo() );
                         new RedisSendStream(new RedisPlayerServer(uuidProfil).getServerInKeyPlayer(), messageBody).sendMessage();
                         new RedisPlayerParty(playerClick.getUuid()).setKeyRequestParty(uuidProfil);
                     } else if (result.getClickedItem().material().equals(Material.REDSTONE_BLOCK)){
@@ -105,7 +106,7 @@ public class CreateInventoryProfile {
         inv.setItemStack(4,
                 ItemStack.builder(Material.PLAYER_HEAD)
                         .displayName(Component.text(new GetPlayer(uuidProfil).getPseudo()))
-                        .meta(PlayerHeadMeta.class, meta -> meta.skullOwner(playerOpen.getUuid()).playerSkin(RedisPlayerSkin.getSkin(playerOpen.getUuid())))
+                        .meta(PlayerHeadMeta.class, meta -> meta.skullOwner(uuidProfil).playerSkin(RedisPlayerSkin.getSkin(uuidProfil)))
                         .build());
 
 
