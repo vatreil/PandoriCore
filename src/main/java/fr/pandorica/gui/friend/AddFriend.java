@@ -53,43 +53,6 @@ public class AddFriend implements PacketListenerConsumer<ClientNameItemPacket> {
                     invAnvil.setItemStack(2, it);
                 }
             }
-//                if (reply.length() <= 16) {
-//                    if (!ParseComponent.getString(player.getDisplayName()).equalsIgnoreCase(reply)){
-//                        if(new RedisServer().playerIsConnect(reply)){
-//                            UUID uuid = new RedisInfoPlayer().getUUIDPlayer(reply);
-//                            if(!(getFriend.isFriendWith(uuid))) {
-//                                if(getFriend.isAllow()){
-//                                    Map<String, String> messageBody = MessageBody.getBody(
-//                                            MessageType.SEND_FRIEND,
-//                                            uuid,
-//                                            player.getUuid(),
-//                                            "§e"+ ParseComponent.getString(player.getDisplayName())  + "§6 Vous a demandé en amis.",
-//                                            "/f accept"
-//                                    );
-//                                    new RedisSendStream(new RedisPlayerServer(uuid).getServerInKeyPlayer(), messageBody).sendMessage();
-//                                    new RedisPlayerFriend(player.getUuid()).setKeyRequestFriend(uuid);
-//
-//                                    player.sendMessage("§6Demande envoyé à §e" + ParseComponent.getString(player.getDisplayName()));
-//
-//
-//                                    player.closeInventory();
-//                                } else {
-//                                    invAnvil.setItemStack(2, getBarrier(Component.text(reply + " n'accepte pas les demandes d'amis", NamedTextColor.RED)));
-//                                }
-//                            } else {
-//                                invAnvil.setItemStack(2, getBarrier(Component.text("Tu es déjà ami avec " + reply, NamedTextColor.GREEN)));
-//                            }
-//                        } else {
-//                            invAnvil.setItemStack(2, getBarrier(Component.text(reply + " est hors ligne!", NamedTextColor.RED)));
-//                        }
-//                    } else {
-//                        invAnvil.setItemStack(2, getBarrier(Component.text("Tu ne peux pas t'ajouter en amis.", NamedTextColor.YELLOW)));
-//                    }
-//                } else {
-//                    invAnvil.setItemStack(2, getBarrier(Component.text("16 caractères maximum.", NamedTextColor.YELLOW)));
-//                }
-//
-//            }
         });
 
     }

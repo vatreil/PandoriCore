@@ -32,7 +32,6 @@ public class PlayerFriend {
                 case 3:
                     player.closeInventory();
                     AddFriend.openInventory(playerClick, null, null);
-                    //new PlayerFriend().openInventory(player);
 
                 default:
                     result.setCancel(true);
