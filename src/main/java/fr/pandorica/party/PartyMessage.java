@@ -22,22 +22,18 @@ public class PartyMessage {
                 UUID uuidPlayer = UUID.fromString(body.get("uuid"));
                 Player player = (Player) Player.getEntity(uuidPlayer);
 
-                if(body.get("cmd") != null){
+                Component accept = Component.text("  Accepter", NamedTextColor.GREEN)
+                        .hoverEvent(HoverEvent.showText(Component.text("Accepter", NamedTextColor.GREEN)))
+                        .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/p accept")).build().clickEvent());
 
-                    Component accept = Component.text("  Accepter", NamedTextColor.GREEN)
-                            .hoverEvent(HoverEvent.showText(Component.text("Accepter", NamedTextColor.GREEN)))
-                            .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, body.get("cmd"))).build().clickEvent());
+                Component refuse = Component.text("  Refuser", NamedTextColor.RED)
+                        .hoverEvent(HoverEvent.showText(Component.text("Refuser", NamedTextColor.RED)))
+                        .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/p refuse")).build().clickEvent());
 
-                    Component refuse = Component.text("  Refuser", NamedTextColor.RED)
-                            .hoverEvent(HoverEvent.showText(Component.text("Refuser", NamedTextColor.RED)))
-                            .clickEvent(Component.text().clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/p refuse")).build().clickEvent());
+                Component msg = Component.text(body.get("msg")).append(accept).append(refuse);
 
-                    Component msg = Component.text(body.get("msg")).append(accept).append(refuse);
+                player.sendMessage(msg);
 
-                    player.sendMessage(msg);
-                } else {
-                    player.sendMessage(body.get("msg"));
-                }
 
                 SendNotification.sendGoal(player,
                         ItemStack.builder(Material.PLAYER_HEAD)

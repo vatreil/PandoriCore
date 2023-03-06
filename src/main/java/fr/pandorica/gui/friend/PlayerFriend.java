@@ -39,7 +39,7 @@ public class PlayerFriend {
             if (result.getClickedItem().material().equals(Material.PLAYER_HEAD)){
                 player.closeInventory();
                 PlayerHeadMeta playerHeadMeta = result.getClickedItem().meta(PlayerHeadMeta.class);
-                new CreateInventoryProfile().openGameMenu(playerClick, playerHeadMeta.getSkullOwner());
+                new CreateInventoryProfile().openGameMenu(playerClick, playerHeadMeta.getSkullOwner(), inv);
             }
         });
 

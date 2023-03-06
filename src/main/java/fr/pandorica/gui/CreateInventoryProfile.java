@@ -30,7 +30,7 @@ import java.util.UUID;
 public class CreateInventoryProfile {
 
 
-    public void openGameMenu(Player playerOpen, UUID uuidProfil){
+    public void openGameMenu(Player playerOpen, UUID uuidProfil, Inventory last_inv){
 
         Boolean modo = RankManager.isAdmin(PlayerManager.getPlayer(playerOpen.getUuid()).getRank());
         Inventory inv = new Inventory((modo)? InventoryType.CHEST_3_ROW : InventoryType.CHEST_1_ROW, new GetPlayer(uuidProfil).getPseudo());
@@ -64,10 +64,14 @@ public class CreateInventoryProfile {
                         playerClick.sendMessage("§6Demande envoyé à §e" + new GetPlayer(uuidProfil).getPseudo() );
                         new RedisSendStream(new RedisPlayerServer(uuidProfil).getServerInKeyPlayer(), messageBody).sendMessage();
                         new RedisPlayerParty(playerClick.getUuid()).setKeyRequestParty(uuidProfil);
+                        playerClick.closeInventory();
+                        playerClick.openInventory(last_inv);
                     } else if (result.getClickedItem().material().equals(Material.REDSTONE_BLOCK)){
                         GetPlayer getPlayer = new GetPlayer(uuidProfil);
                         playerClick.sendMessage("§7" + getPlayer.getPseudo() + "§c est supprimé de la party.");
                         new RedisPlayerParty(playerClick.getUuid()).delPlayerParty(uuidProfil);
+                        playerClick.closeInventory();
+                        playerClick.openInventory(last_inv);
                     }
             }
         });
