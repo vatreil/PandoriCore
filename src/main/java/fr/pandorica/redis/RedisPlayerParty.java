@@ -80,7 +80,6 @@ public class RedisPlayerParty {
             Jedis jedis = RedisManager.getJedis();
             String leader = jedis.hget("player:" + uuid, "party");
             jedis.close();
-            System.out.println(uuid + "   " + leader);
             return (leader != null)?((leader.equals(uuid.toString()))?true:false): false;
         } catch (JedisConnectionException e){
             e.printStackTrace();
