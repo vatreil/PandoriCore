@@ -31,7 +31,7 @@ public class Party implements PacketListenerConsumer<ClientCommandChatPacket> {
                 return;
             }
 
-            if (cmd.length == 1) {
+            if (cmd.length == 2) {
                 if (cmd[0].equalsIgnoreCase("accept")) {
 
                     // si il n'a pas de demande de party
@@ -55,7 +55,7 @@ public class Party implements PacketListenerConsumer<ClientCommandChatPacket> {
 
                     redisParty.delKeyRequestParty();
 
-                } else if (cmd[0].equalsIgnoreCase("refuse")) {
+                } else if (cmd[1].equalsIgnoreCase("refuse")) {
 
                     // si il n'a pas de demande de party
                     if (!(redisParty.haveRequestCurrently())) {
@@ -69,12 +69,12 @@ public class Party implements PacketListenerConsumer<ClientCommandChatPacket> {
                     player.sendMessage("§6Vous avez refusé la demande de party à §a" + new RedisPlayerServer(UUID.fromString(redisParty.getKeyRequestParty())) + " §6.");
                     redisParty.delKeyRequestParty();
 
-                } else if (cmd[0].equalsIgnoreCase("add")) {
-                    if (cmd.length < 2) {
+                } else if (cmd[1].equalsIgnoreCase("add")) {
+                    if (cmd.length < 3) {
                         displayHelp(player);
                     }
-                } else if (cmd[0].equalsIgnoreCase("remove")) {
-                    if (cmd.length < 2) {
+                } else if (cmd[1].equalsIgnoreCase("remove")) {
+                    if (cmd.length < 3) {
                         displayHelp(player);
                     }
 
@@ -82,9 +82,9 @@ public class Party implements PacketListenerConsumer<ClientCommandChatPacket> {
                 }
             }
 
-            if (cmd.length == 2) {
-                if (cmd[0].equalsIgnoreCase("add")) {
-                    String targetName = cmd[1];
+            if (cmd.length == 3) {
+                if (cmd[1].equalsIgnoreCase("add")) {
+                    String targetName = cmd[2];
                     UUID uuidPlayer = new RedisInfoPlayer().getUUIDPlayer(targetName);
                     if (uuidPlayer != null) {
 
@@ -127,7 +127,7 @@ public class Party implements PacketListenerConsumer<ClientCommandChatPacket> {
                     } else {
                         player.sendMessage("§cLe joueur est deconnecté.");
                     }
-                } else if (cmd[0].equalsIgnoreCase("quit")) {
+                } else if (cmd[1].equalsIgnoreCase("quit")) {
 
                     if (!redisParty.hasProfilParty()) {
                         player.sendMessage("§cVous avez pas de party.");
