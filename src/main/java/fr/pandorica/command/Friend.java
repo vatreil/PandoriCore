@@ -20,6 +20,8 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.listener.manager.PacketListenerConsumer;
 import net.minestom.server.network.packet.client.play.ClientCommandChatPacket;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 
@@ -117,9 +119,30 @@ public class Friend implements PacketListenerConsumer<ClientCommandChatPacket> {
                         AddFriend.openInventory(player, cmd[2], it);
                     }
                 }
+            }else if (cmd[1].equalsIgnoreCase("enable")) {
+                GetFriend getFriend = new GetFriend(player.getUuid());
+                if(getFriend.isAllow() == true) {
+                    PostFriend postFriend = new PostFriend(player.getUuid());
+                    postFriend.setAllow(true);
+                    player.sendMessage("§eDemandes d'amis §aactivés");
+                } else {
+                    player.sendMessage("§cVous acceptez déjà les demandes d'amis");
+                }
+            } else if (cmd[1].equalsIgnoreCase("disable")) {
+                GetFriend getFriend = new GetFriend(player.getUuid());
+                if(getFriend.isAllow() != true) {
+                    PostFriend postFriend = new PostFriend(player.getUuid());
+                    postFriend.setAllow(false);
+                    player.sendMessage("§eDemandes d'amis §cDesactivés");
+                } else {
+                    player.sendMessage("§cVous acceptez déjà les demandes d'amis");
+                }
             } else {
                 displayHelp(player);
             }
+        }
+        if (new ArrayList<>(Arrays.asList("friends", "friend")).contains(cmd[0])){
+            displayHelp(player);
         }
     }
 
@@ -128,7 +151,7 @@ public class Friend implements PacketListenerConsumer<ClientCommandChatPacket> {
         player.sendMessage(Component.text("Commands friends :", NamedTextColor.GOLD));
         player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f add Username", "Ajouter un amis", "/f add"));
         player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f accept", "Accepter la demandes d'ami", "/f accept"));
-        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f accept", "Refuser la demandes d'ami", "/f refuse"));
+        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f refuse", "Refuser la demandes d'ami", "/f refuse"));
         player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f enable", "Activer les demandes d'amis", "/f enable"));
         player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f disable", "Désactiver les demandes d'amis", "/f disable"));
         player.sendMessage("");
