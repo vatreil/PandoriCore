@@ -36,6 +36,7 @@ public class CreateInventoryProfile {
         Inventory inv = new Inventory((modo)? InventoryType.CHEST_3_ROW : InventoryType.CHEST_1_ROW, new GetPlayer(uuidProfil).getPseudo());
 
         inv.addInventoryCondition((playerClick, slot, click, result) -> {
+            result.setCancel(true);
             switch (slot){
                 case 2:
                     if (result.getClickedItem().material().equals(Material.EMERALD_BLOCK)){
@@ -47,6 +48,8 @@ public class CreateInventoryProfile {
                         }
                     } else if (result.getClickedItem().material().equals(Material.REDSTONE_BLOCK)){
                         new PostFriend(playerClick.getUuid()).removeFriend(uuidProfil);
+                        playerClick.closeInventory();
+                        playerClick.openInventory(inv);
                     }
                     break;
                 case 6:
