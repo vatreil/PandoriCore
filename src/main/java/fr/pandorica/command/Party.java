@@ -144,9 +144,10 @@ public class Party implements PacketListenerConsumer<ClientCommandChatPacket> {
     private void displayHelp(Player player) {
         player.sendMessage("");
         player.sendMessage(Component.text("Commands party :", NamedTextColor.GOLD));
-        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f add Username", "Ajouter un amis", "/f add"));
-        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f accept", "Accepter la demandes d'ami", "/f accept"));
-        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/f refuse", "Refuser la demandes d'ami", "/f refuse"));
+        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/p add Username", "Ajouter en party", "/p add"));
+        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/p accept", "Accepter la demandes de party", "/p accept"));
+        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/p refuse", "Refuser la demandes de party", "/p refuse"));
+        player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/p quit", "Quitter la party", "/p refuse"));
         player.sendMessage("");
     }
 }
