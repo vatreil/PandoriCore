@@ -3,6 +3,7 @@ package fr.pandorica.gui;
 
 import fr.pandorica.friend.RequestFriend;
 import fr.pandorica.gui.friend.AddFriend;
+import fr.pandorica.player.PlayerManager;
 import fr.pandorica.rank.RankManager;
 import fr.pandorica.redis.MessagePlayer.MessageBody;
 import fr.pandorica.redis.MessagePlayer.MessageType;
@@ -31,8 +32,7 @@ public class CreateInventoryProfile {
 
     public void openGameMenu(Player playerOpen, UUID uuidProfil){
 
-        GetPlayer getPlayer = new GetPlayer(playerOpen.getUuid());
-        Boolean modo = RankManager.isAdmin(getPlayer.getRank());
+        Boolean modo = RankManager.isAdmin(PlayerManager.getPlayer(playerOpen.getUuid()).getRank());
         Inventory inv = new Inventory((modo)? InventoryType.CHEST_3_ROW : InventoryType.CHEST_1_ROW, new GetPlayer(uuidProfil).getPseudo());
 
         inv.addInventoryCondition((playerClick, slot, click, result) -> {
@@ -61,7 +61,9 @@ public class CreateInventoryProfile {
                         new RedisSendStream(new RedisPlayerServer(uuidProfil).getServerInKeyPlayer(), messageBody).sendMessage();
                         new RedisPlayerParty(playerClick.getUuid()).setKeyRequestParty(uuidProfil);
                     } else if (result.getClickedItem().material().equals(Material.REDSTONE_BLOCK)){
-
+                        GetPlayer getPlayer = new GetPlayer(uuidProfil);
+                        playerClick.sendMessage("§7" + getPlayer.getPseudo() + "§c est supprimé de la party.");
+                        new RedisPlayerParty(playerClick.getUuid()).delPlayerParty(uuidProfil);
                     }
             }
         });
