@@ -27,6 +27,37 @@ public class PlayerFriend {
 
         Inventory inv = new Inventory(InventoryType.CHEST_6_ROW, namegui);
 
+        inv.setItemStack(3,
+                ItemStack.builder(Material.EMERALD_BLOCK)
+                        .displayName(Component.text(addf, NamedTextColor.GREEN)).build());
+
+        inv.setItemStack(5,
+                ItemStack.builder(Material.REDSTONE_BLOCK)
+                        .displayName(Component.text(remf, NamedTextColor.RED)).build());
+
+        for (int i = 9; i < 18; i++){
+            inv.setItemStack(i,
+                    ItemStack.builder(Material.WHITE_STAINED_GLASS)
+                            .displayName(Component.text("--------", NamedTextColor.WHITE)).build());
+        }
+
+        int slot_inv = 18;
+        for (String uuid : new GetFriend(player.getUuid()).getFriendsList()){
+            if (!uuid.equals("[]")) {
+                if(slot_inv >= 35)break;
+                GetPlayer getPlayer = new GetPlayer(UUID.fromString(uuid));
+                ItemStack itemStack = ItemStack.builder(Material.PLAYER_HEAD)
+                        .displayName(Component.text(RankManager.powerToRank(getPlayer.getRank()).getDisplayName() + getPlayer.getPseudo()))
+                        .lore(Component.text(Timer.getTimerToString(getPlayer.getTemps())),
+                                Component.text("§7Zone :§r"))
+                        .build();
+
+                inv.setItemStack(slot_inv,itemStack);
+                new SkinThread().getSkin(inv, slot_inv, itemStack, UUID.fromString(uuid));
+                slot_inv++;
+            }
+        }
+
         inv.addInventoryCondition((playerClick, slot, click, result) -> {
             switch (slot){
                 case 3:
@@ -42,37 +73,6 @@ public class PlayerFriend {
                 new CreateInventoryProfile().openGameMenu(playerClick, playerHeadMeta.getSkullOwner(), inv);
             }
         });
-
-        inv.setItemStack(3,
-                ItemStack.builder(Material.EMERALD_BLOCK)
-                        .displayName(Component.text(addf, NamedTextColor.GREEN)).build());
-
-        inv.setItemStack(5,
-                ItemStack.builder(Material.REDSTONE_BLOCK)
-                        .displayName(Component.text(remf, NamedTextColor.RED)).build());
-
-        for (int i = 9; i < 18; i++){
-            inv.setItemStack(i,
-                    ItemStack.builder(Material.WHITE_STAINED_GLASS)
-                            .displayName(Component.text("--------", NamedTextColor.WHITE)).build());
-        }
-
-        int slot = 18;
-        for (String uuid : new GetFriend(player.getUuid()).getFriendsList()){
-            if (!uuid.equals("[]")) {
-                if(slot >= 35)break;
-                GetPlayer getPlayer = new GetPlayer(UUID.fromString(uuid));
-                ItemStack itemStack = ItemStack.builder(Material.PLAYER_HEAD)
-                        .displayName(Component.text(RankManager.powerToRank(getPlayer.getRank()).getDisplayName() + getPlayer.getPseudo()))
-                        .lore(Component.text(Timer.getTimerToString(getPlayer.getTemps())),
-                                Component.text("§7Zone :§r"))
-                        .build();
-
-                inv.setItemStack(slot,itemStack);
-                new SkinThread().getSkin(inv, slot, itemStack, UUID.fromString(uuid));
-                slot++;
-            }
-        }
 
         player.openInventory(inv);
 
