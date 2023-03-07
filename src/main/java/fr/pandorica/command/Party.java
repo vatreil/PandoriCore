@@ -14,7 +14,10 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.listener.manager.PacketListenerConsumer;
 import net.minestom.server.network.packet.client.play.ClientCommandChatPacket;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.UUID;
 
 public class Party implements PacketListenerConsumer<ClientCommandChatPacket> {
     @Override
