@@ -32,7 +32,7 @@ public class Party implements PacketListenerConsumer<ClientCommandChatPacket> {
             }
 
             if (cmd.length == 2) {
-                if (cmd[0].equalsIgnoreCase("accept")) {
+                if (cmd[1].equalsIgnoreCase("accept")) {
 
                     // si il n'a pas de demande de party
                     if (!(redisParty.haveRequestCurrently())) {
@@ -137,6 +137,8 @@ public class Party implements PacketListenerConsumer<ClientCommandChatPacket> {
                     redisParty.delPlayerParty(UUID.fromString(redisParty.getLeader()));
 
                 }
+            } else {
+                displayHelp(player);
             }
         }
     }
