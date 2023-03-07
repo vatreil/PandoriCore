@@ -153,6 +153,7 @@ public class Party implements PacketListenerConsumer<ClientCommandChatPacket> {
         player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/p accept", "Accepter la demandes de party", "/p accept"));
         player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/p refuse", "Refuser la demandes de party", "/p refuse"));
         player.sendMessage(ParseComponent.getClickPreSetCmdWithDesc("/p quit", "Quitter la party", "/p refuse"));
+
         player.sendMessage("");
     }
 }
