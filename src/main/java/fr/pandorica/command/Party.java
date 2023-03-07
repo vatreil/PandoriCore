@@ -14,15 +14,15 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.listener.manager.PacketListenerConsumer;
 import net.minestom.server.network.packet.client.play.ClientCommandChatPacket;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Party implements PacketListenerConsumer<ClientCommandChatPacket> {
     @Override
     public void accept(ClientCommandChatPacket packet, Player player) {
         String[] cmd = packet.message().split(" ");
-
+        if (new ArrayList<>(Arrays.asList("party", "partie")).contains(cmd[0])){
+            displayHelp(player);
+        }
 
         if (cmd[0].equalsIgnoreCase("p")) {
             RedisPlayerParty redisParty = new RedisPlayerParty(player.getUuid());
