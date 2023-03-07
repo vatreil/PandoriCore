@@ -141,7 +141,7 @@ public class Party implements PacketListenerConsumer<ClientCommandChatPacket> {
 
                 }
             } else {
-                displayHelp(player);
+                displayHelp(play;
             }
         }
     }
