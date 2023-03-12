@@ -23,7 +23,7 @@ dependencies {
 jar {
     manifest {
         // WARNING: change the 'Main-Class' value
-        attributes 'Main-Class': 'fr.pandorica.Main',
+        attributes 'Main-Class': 'fr.pandorica',
                 "Multi-Release": true
     }
 }
