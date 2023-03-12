@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-group 'fr.pandorica'
+group 'com.github.vatreil'
 version '1.0-SNAPSHOT'
 
 repositories {
