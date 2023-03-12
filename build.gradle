@@ -1,10 +1,11 @@
+
 plugins {
     id 'java'
     id "com.github.johnrengelman.shadow" version "6.1.0"
     id 'maven-publish'
 }
 
-group 'com.github.vatreil'
+group 'fr.pandorica'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -23,10 +24,7 @@ dependencies {
 jar {
     manifest {
         // WARNING: change the 'Main-Class' value
-        attributes 'Main-Class': 'fr.pandorica',
+        attributes 'Main-Class': 'org.example.Main',
                 "Multi-Release": true
     }
 }
-
-
-
