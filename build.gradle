@@ -15,7 +15,7 @@ repositories {
 dependencies {
     // WARNING: outdated version, replace it to the latest
     // Reminder: can be found at https://jitpack.io/#Minestom/Minestom
-    implementation 'com.github.Minestom:Minestom:1.19.3-SNAPSHOT'
+    implementation 'com.github.Minestom:Minestom:50e1e72c1b'
     implementation 'com.github.TogAr2:MinestomPvP:master-SNAPSHOT'
     implementation 'redis.clients:jedis:3.7.0'
 }
@@ -23,7 +23,7 @@ dependencies {
 jar {
     manifest {
         // WARNING: change the 'Main-Class' value
-        attributes 'Main-Class': 'org.example.Main',
+        attributes 'Main-Class': 'fr.pandorica.Main',
                 "Multi-Release": true
     }
 }
